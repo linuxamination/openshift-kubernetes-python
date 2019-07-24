@@ -1,0 +1,28 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgresql
+  namespace: oc
+  selfLink: /api/v1/namespaces/oc/services/postgresql
+  uid: 928163ce-ac7b-11e9-873d-029155709394
+  resourceVersion: '45084012'
+  creationTimestamp: '2019-07-22T12:23:55Z'
+  labels:
+    app: postgresql
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+spec:
+  ports:
+    - name: 5432-tcp
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+  selector:
+    app: postgresql
+    deploymentconfig: postgresql
+  clusterIP: 172.30.104.186
+  type: ClusterIP
+  sessionAffinity: None
+status:
+  loadBalancer: {}
+

@@ -1,0 +1,26 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: django2
+  namespace: oc
+  selfLink: /api/v1/namespaces/oc/services/django2
+  uid: ad12d239-ac76-11e9-873d-029155709394
+  resourceVersion: '45099415'
+  creationTimestamp: '2019-07-22T11:48:52Z'
+  labels:
+    app: django2
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8001
+      targetPort: 8001
+  selector:
+    app: django2
+    deploymentconfig: django2
+  clusterIP: 172.30.138.110
+  type: ClusterIP
+  sessionAffinity: None
+status:
+  loadBalancer: {}
+
