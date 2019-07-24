@@ -1,0 +1,151 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  generateName: postgresql-1-
+  annotations:
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "openshift-sdn",
+          "interface": "eth0",
+          "ips": [
+              "10.128.13.241"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    kubernetes.io/limit-ranger: >-
+      LimitRanger plugin set: cpu, memory request for container postgresql; cpu,
+      memory limit for container postgresql
+    openshift.io/deployment-config.latest-version: '1'
+    openshift.io/deployment-config.name: postgresql
+    openshift.io/deployment.name: postgresql-1
+    openshift.io/generated-by: OpenShiftNewApp
+    openshift.io/scc: restricted
+  selfLink: /api/v1/namespaces/oc/pods/postgresql-1-v68ds
+  resourceVersion: '45088655'
+  name: postgresql-1-v68ds
+  uid: 314b244d-ac7c-11e9-873d-029155709394
+  creationTimestamp: '2019-07-22T12:28:21Z'
+  namespace: oc
+  ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: postgresql-1
+      uid: 93385240-ac7b-11e9-9d75-06a98f27bd4e
+      controller: true
+      blockOwnerDeletion: true
+  labels:
+    app: postgresql
+    deployment: postgresql-1
+    deploymentconfig: postgresql
+spec:
+  restartPolicy: Always
+  serviceAccountName: default
+  imagePullSecrets:
+    - name: default-dockercfg-k5m6r
+  priority: 0
+  schedulerName: default-scheduler
+  enableServiceLinks: true
+  terminationGracePeriodSeconds: 30
+  nodeName: ip-10-0-157-137.us-west-2.compute.internal
+  securityContext:
+    seLinuxOptions:
+      level: 's0:c214,c69'
+    fsGroup: 1045720000
+  containers:
+    - resources:
+        limits:
+          cpu: '1'
+          memory: 512Mi
+        requests:
+          cpu: 20m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      name: postgresql
+      env:
+        - name: POSTGRESQL_DATABASE
+          value: chatbotapi
+        - name: POSTGRESQL_PASSWORD
+          value: *****
+        - name: POSTGRESQL_USER
+          value: *****
+      securityContext:
+        capabilities:
+          drop:
+            - KILL
+            - MKNOD
+            - SETGID
+            - SETUID
+        runAsUser: 1045720000
+        procMount: Default
+      ports:
+        - containerPort: 5432
+          protocol: TCP
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: postgresql-volume-1
+          mountPath: /var/lib/pgsql/data
+        - name: default-token-pt79s
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePolicy: File
+      image: >-
+        image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:0cf19c73fb1ed0784a5092edd42ce662d7328dac529f56b6bfc3d85b24552ed4
+  serviceAccount: default
+  volumes:
+    - name: postgresql-volume-1
+      emptyDir: {}
+    - name: default-token-pt79s
+      secret:
+        secretName: default-token-pt79s
+        defaultMode: 420
+  dnsPolicy: ClusterFirst
+  tolerations:
+    - key: node.kubernetes.io/memory-pressure
+      operator: Exists
+      effect: NoSchedule
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+status:
+  phase: Running
+  conditions:
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2019-07-22T12:28:21Z'
+    - type: Ready
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2019-07-22T12:28:34Z'
+    - type: ContainersReady
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2019-07-22T12:28:34Z'
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2019-07-22T12:28:21Z'
+  hostIP: 10.0.157.137
+  podIP: 10.128.13.241
+  startTime: '2019-07-22T12:28:21Z'
+  containerStatuses:
+    - name: postgresql
+      state:
+        running:
+          startedAt: '2019-07-22T12:28:33Z'
+      lastState: {}
+      ready: true
+      restartCount: 0
+      image: >-
+        image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:0cf19c73fb1ed0784a5092edd42ce662d7328dac529f56b6bfc3d85b24552ed4
+      imageID: >-
+        image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:0cf19c73fb1ed0784a5092edd42ce662d7328dac529f56b6bfc3d85b24552ed4
+      containerID: 'cri-o://bb7a421a0383aca4d693a429a121468df4f04864106bb1c0bbb0e4ec69e71e46'
+  qosClass: Burstable
+

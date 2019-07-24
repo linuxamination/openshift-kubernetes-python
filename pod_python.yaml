@@ -1,0 +1,139 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  generateName: django2-1-
+  annotations:
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "openshift-sdn",
+          "interface": "eth0",
+          "ips": [
+              "10.130.18.161"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    kubernetes.io/limit-ranger: >-
+      LimitRanger plugin set: cpu, memory request for container django2; cpu,
+      memory limit for container django2
+    openshift.io/deployment-config.latest-version: '1'
+    openshift.io/deployment-config.name: django2
+    openshift.io/deployment.name: django2-1
+    openshift.io/scc: restricted
+  selfLink: /api/v1/namespaces/oc/pods/django2-1-72975
+  resourceVersion: '45055158'
+  name: django2-1-72975
+  uid: 10eb6510-ac77-11e9-873d-029155709394
+  creationTimestamp: '2019-07-22T11:51:39Z'
+  namespace: oc
+  ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: django2-1
+      uid: 0b6b9f76-ac77-11e9-9d75-06a98f27bd4e
+      controller: true
+      blockOwnerDeletion: true
+  labels:
+    app: django2
+    deployment: django2-1
+    deploymentconfig: django2
+spec:
+  restartPolicy: Always
+  serviceAccountName: default
+  imagePullSecrets:
+    - name: default-dockercfg-k5m6r
+  priority: 0
+  schedulerName: default-scheduler
+  enableServiceLinks: true
+  terminationGracePeriodSeconds: 30
+  nodeName: ip-10-0-172-48.us-west-2.compute.internal
+  securityContext:
+    seLinuxOptions:
+      level: 's0:c214,c69'
+    fsGroup: 1045720000
+  containers:
+    - resources:
+        limits:
+          cpu: '1'
+          memory: 512Mi
+        requests:
+          cpu: 20m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      name: django2
+      securityContext:
+        capabilities:
+          drop:
+            - KILL
+            - MKNOD
+            - SETGID
+            - SETUID
+        runAsUser: 1045720000
+        procMount: Default
+      ports:
+        - containerPort: 8080
+          protocol: TCP
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: default-token-pt79s
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePolicy: File
+      image: >-
+        image-registry.openshift-image-registry.svc:5000/oc/django2@sha256:74da84c851c2458777fe0bf89fd7c890b67e028c708f22971c80cf02276dc9b4
+  serviceAccount: default
+  volumes:
+    - name: default-token-pt79s
+      secret:
+        secretName: default-token-pt79s
+        defaultMode: 420
+  dnsPolicy: ClusterFirst
+  tolerations:
+    - key: node.kubernetes.io/memory-pressure
+      operator: Exists
+      effect: NoSchedule
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+status:
+  phase: Running
+  conditions:
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2019-07-22T11:51:39Z'
+    - type: Ready
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2019-07-22T11:51:51Z'
+    - type: ContainersReady
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2019-07-22T11:51:51Z'
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2019-07-22T11:51:39Z'
+  hostIP: 10.0.172.48
+  podIP: 10.130.18.161
+  startTime: '2019-07-22T11:51:39Z'
+  containerStatuses:
+    - name: django2
+      state:
+        running:
+          startedAt: '2019-07-22T11:51:50Z'
+      lastState: {}
+      ready: true
+      restartCount: 0
+      image: >-
+        image-registry.openshift-image-registry.svc:5000/oc/django2@sha256:74da84c851c2458777fe0bf89fd7c890b67e028c708f22971c80cf02276dc9b4
+      imageID: >-
+        image-registry.openshift-image-registry.svc:5000/oc/django2@sha256:74da84c851c2458777fe0bf89fd7c890b67e028c708f22971c80cf02276dc9b4
+      containerID: 'cri-o://8a53f6d2971909d547ba5dbe3422122b7a71b05efc7150376621aa37d1aa7b47'
+  qosClass: Burstable
+
