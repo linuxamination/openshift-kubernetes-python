@@ -1,0 +1,43 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: django2
+  namespace: oc
+  selfLink: /apis/build.openshift.io/v1/namespaces/oc/buildconfigs/django2
+  uid: ad12d7f4-ac76-11e9-b9bc-0a580a80003e
+  resourceVersion: '45052260'
+  creationTimestamp: '2019-07-22T11:48:52Z'
+  labels:
+    app: django2
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'django2:latest'
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: openshift
+        name: 'python:3.6'
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/sclorg/django-ex.git'
+      ref: master
+  triggers:
+    - type: ImageChange
+      imageChange:
+        lastTriggeredImageID: >-
+          image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:4ec5fa514a27f4b038b5b5bd0425f6bacbab7c8636bfd78fbe55ac7232b30e0e
+    - type: ConfigChange
+  runPolicy: Serial
+status:
+  lastVersion: 1
+

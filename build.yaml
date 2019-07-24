@@ -1,0 +1,112 @@
+kind: Build
+apiVersion: build.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/build-config.name: django2
+    openshift.io/build.number: '1'
+    openshift.io/build.pod-name: django2-1-build
+  selfLink: /apis/build.openshift.io/v1/namespaces/oc/builds/django2-1
+  resourceVersion: '45054804'
+  name: django2-1
+  uid: ad4b1f9f-ac76-11e9-b9bc-0a580a80003e
+  creationTimestamp: '2019-07-22T11:48:52Z'
+  namespace: oc
+  ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      kind: BuildConfig
+      name: django2
+      uid: ad12d7f4-ac76-11e9-b9bc-0a580a80003e
+      controller: true
+  labels:
+    app: django2
+    buildconfig: django2
+    openshift.io/build-config.name: django2
+    openshift.io/build.start-policy: Serial
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'django2:latest'
+    pushSecret:
+      name: builder-dockercfg-hjrjh
+  resources: {}
+  triggeredBy:
+    - message: Image change
+      imageChangeBuild:
+        imageID: >-
+          image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:4ec5fa514a27f4b038b5b5bd0425f6bacbab7c8636bfd78fbe55ac7232b30e0e
+        fromRef:
+          kind: ImageStreamTag
+          namespace: openshift
+          name: 'python:3.6'
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: DockerImage
+        name: >-
+          image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:4ec5fa514a27f4b038b5b5bd0425f6bacbab7c8636bfd78fbe55ac7232b30e0e
+      pullSecret:
+        name: builder-dockercfg-hjrjh
+  postCommit: {}
+  serviceAccount: builder
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/sclorg/django-ex.git'
+      ref: master
+  revision:
+    type: Git
+    git:
+      commit: 090522300f6cfe9476308128684b1624e980df7b
+      author:
+        name: Ben Parees
+        email: bparees@users.noreply.github.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+      message: 'Merge pull request #137 from danmcp/patch-1'
+status:
+  phase: Complete
+  startTimestamp: '2019-07-22T11:48:52Z'
+  completionTimestamp: '2019-07-22T11:51:30Z'
+  duration: 158000000000
+  outputDockerImageReference: 'image-registry.openshift-image-registry.svc:5000/oc/django2:latest'
+  config:
+    kind: BuildConfig
+    namespace: oc
+    name: django2
+  output:
+    to:
+      imageDigest: 'sha256:74da84c851c2458777fe0bf89fd7c890b67e028c708f22971c80cf02276dc9b4'
+  stages:
+    - name: FetchInputs
+      startTime: '2019-07-22T11:49:01Z'
+      durationMilliseconds: 410
+      steps:
+        - name: FetchGitSource
+          startTime: '2019-07-22T11:49:01Z'
+          durationMilliseconds: 410
+    - name: PullImages
+      startTime: '2019-07-22T11:49:04Z'
+      durationMilliseconds: 120412
+      steps:
+        - name: PullBaseImage
+          startTime: '2019-07-22T11:49:04Z'
+          durationMilliseconds: 120412
+    - name: Build
+      startTime: '2019-07-22T11:51:05Z'
+      durationMilliseconds: 20031
+      steps:
+        - name: DockerBuild
+          startTime: '2019-07-22T11:51:05Z'
+          durationMilliseconds: 20031
+    - name: PushImage
+      startTime: '2019-07-22T11:51:25Z'
+      durationMilliseconds: 4902
+      steps:
+        - name: PushImage
+          startTime: '2019-07-22T11:51:25Z'
+          durationMilliseconds: 4902
+
