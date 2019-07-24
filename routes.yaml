@@ -1,0 +1,34 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: r2
+  namespace: oc
+  selfLink: /apis/route.openshift.io/v1/namespaces/oc/routes/r2
+  uid: ed371107-ac7d-11e9-b9bc-0a580a80003e
+  resourceVersion: '45099919'
+  creationTimestamp: '2019-07-22T12:40:46Z'
+  labels:
+    app: django2
+  annotations:
+    openshift.io/host.generated: 'true'
+spec:
+  host: r2-oc.apps.us-west-2.online-starter.openshift.com
+  subdomain: ''
+  to:
+    kind: Service
+    name: django2
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: r2-oc.apps.us-west-2.online-starter.openshift.com
+      routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+          lastTransitionTime: '2019-07-22T12:40:46Z'
+      wildcardPolicy: None
+      routerCanonicalHostname: apps.us-west-2.online-starter.openshift.com
+
