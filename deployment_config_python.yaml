@@ -1,0 +1,90 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: django2
+  namespace: oc
+  selfLink: /apis/apps.openshift.io/v1/namespaces/oc/deploymentconfigs/django2
+  uid: ad108a84-ac76-11e9-bbb0-0a580a820059
+  resourceVersion: '45055187'
+  generation: 2
+  creationTimestamp: '2019-07-22T11:48:52Z'
+  labels:
+    app: django2
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - django2
+        from:
+          kind: ImageStreamTag
+          namespace: oc
+          name: 'django2:latest'
+        lastTriggeredImage: >-
+          image-registry.openshift-image-registry.svc:5000/oc/django2@sha256:74da84c851c2458777fe0bf89fd7c890b67e028c708f22971c80cf02276dc9b4
+    - type: ConfigChange
+  replicas: 1
+  revisionHistoryLimit: 10
+  test: false
+  selector:
+    app: django2
+    deploymentconfig: django2
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: django2
+        deploymentconfig: django2
+    spec:
+      containers:
+        - name: django2
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/oc/django2@sha256:74da84c851c2458777fe0bf89fd7c890b67e028c708f22971c80cf02276dc9b4
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+status:
+  observedGeneration: 2
+  details:
+    message: config change
+    causes:
+      - type: ConfigChange
+  availableReplicas: 1
+  unavailableReplicas: 0
+  latestVersion: 1
+  updatedReplicas: 1
+  conditions:
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2019-07-22T11:51:51Z'
+      lastTransitionTime: '2019-07-22T11:51:51Z'
+      message: Deployment config has minimum availability.
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2019-07-22T11:51:52Z'
+      lastTransitionTime: '2019-07-22T11:51:52Z'
+      reason: NewReplicationControllerAvailable
+      message: replication controller "django2-1" successfully rolled out
+  replicas: 1
+  readyReplicas: 1
+

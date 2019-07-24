@@ -1,0 +1,107 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  selfLink: /apis/apps.openshift.io/v1/namespaces/oc/deploymentconfigs/postgresql
+  resourceVersion: '45088752'
+  name: postgresql
+  uid: 92572814-ac7b-11e9-8b4f-0a580a810043
+  creationTimestamp: '2019-07-22T12:23:54Z'
+  generation: 2
+  namespace: oc
+  labels:
+    app: postgresql
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - postgresql
+        from:
+          kind: ImageStreamTag
+          namespace: openshift
+          name: 'postgresql:9.5'
+        lastTriggeredImage: >-
+          image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:0cf19c73fb1ed0784a5092edd42ce662d7328dac529f56b6bfc3d85b24552ed4
+  replicas: 1
+  revisionHistoryLimit: 10
+  test: false
+  selector:
+    app: postgresql
+    deploymentconfig: postgresql
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: postgresql
+        deploymentconfig: postgresql
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      volumes:
+        - name: postgresql-volume-1
+          emptyDir: {}
+      containers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: postgresql
+          env:
+            - name: POSTGRESQL_DATABASE
+              value: aimlbot
+            - name: POSTGRESQL_PASSWORD
+              value: *****
+            - name: POSTGRESQL_USER
+              value: *****
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: postgresql-volume-1
+              mountPath: /var/lib/pgsql/data
+          terminationMessagePolicy: File
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:0cf19c73fb1ed0784a5092edd42ce662d7328dac529f56b6bfc3d85b24552ed4
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+status:
+  observedGeneration: 2
+  details:
+    message: config change
+    causes:
+      - type: ConfigChange
+  availableReplicas: 1
+  unavailableReplicas: 0
+  latestVersion: 1
+  updatedReplicas: 1
+  conditions:
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2019-07-22T12:28:34Z'
+      lastTransitionTime: '2019-07-22T12:28:34Z'
+      message: Deployment config has minimum availability.
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2019-07-22T12:28:40Z'
+      lastTransitionTime: '2019-07-22T12:28:40Z'
+      reason: NewReplicationControllerAvailable
+      message: replication controller "postgresql-1" successfully rolled out
+  replicas: 1
+  readyReplicas: 1
+
