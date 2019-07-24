@@ -1,0 +1,88 @@
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  annotations:
+    openshift.io/deployment-config.name: postgresql
+    openshift.io/deployer-pod.completed-at: '2019-07-22 12:28:34 +0000 UTC'
+    openshift.io/deployment.phase: Complete
+    openshift.io/deployer-pod.created-at: '2019-07-22 12:23:56 +0000 UTC'
+    openshift.io/deployment-config.latest-version: '1'
+    openshift.io/deployment.status-reason: config change
+    openshift.io/deployment.replicas: '1'
+    openshift.io/encoded-deployment-config: >
+      {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"postgresql","namespace":"oc","selfLink":"/apis/apps.openshift.io/v1/namespaces/oc/deploymentconfigs/postgresql","uid":"92572814-ac7b-11e9-8b4f-0a580a810043","resourceVersion":"45084044","generation":2,"creationTimestamp":"2019-07-22T12:23:54Z","labels":{"app":"postgresql"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["postgresql"],"from":{"kind":"ImageStreamTag","namespace":"openshift","name":"postgresql:9.5"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:0cf19c73fb1ed0784a5092edd42ce662d7328dac529f56b6bfc3d85b24552ed4"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"app":"postgresql","deploymentconfig":"postgresql"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"postgresql","deploymentconfig":"postgresql"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"volumes":[{"name":"postgresql-volume-1","emptyDir":{}}],"containers":[{"name":"postgresql","image":"image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:0cf19c73fb1ed0784a5092edd42ce662d7328dac529f56b6bfc3d85b24552ed4","ports":[{"containerPort":5432,"protocol":"TCP"}],"env":[{"name":"POSTGRESQL_DATABASE","value":"chatbotapi"},{"name":"POSTGRESQL_PASSWORD","value":"admin"},{"name":"POSTGRESQL_USER","value":"admin"}],"resources":{},"volumeMounts":[{"name":"postgresql-volume-1","mountPath":"/var/lib/pgsql/data"}],"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config
+      change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2019-07-22T12:23:54Z","lastTransitionTime":"2019-07-22T12:23:54Z","message":"Deployment
+      config does not have minimum availability."}]}}
+    openshift.io/deployer-pod.name: postgresql-1-deploy
+  selfLink: /api/v1/namespaces/oc/replicationcontrollers/postgresql-1
+  resourceVersion: '45088750'
+  name: postgresql-1
+  uid: 93385240-ac7b-11e9-9d75-06a98f27bd4e
+  creationTimestamp: '2019-07-22T12:23:56Z'
+  generation: 2
+  namespace: oc
+  ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      kind: DeploymentConfig
+      name: postgresql
+      uid: 92572814-ac7b-11e9-8b4f-0a580a810043
+      controller: true
+      blockOwnerDeletion: true
+  labels:
+    app: postgresql
+    openshift.io/deployment-config.name: postgresql
+spec:
+  replicas: 1
+  selector:
+    app: postgresql
+    deployment: postgresql-1
+    deploymentconfig: postgresql
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: postgresql
+        deployment: postgresql-1
+        deploymentconfig: postgresql
+      annotations:
+        openshift.io/deployment-config.latest-version: '1'
+        openshift.io/deployment-config.name: postgresql
+        openshift.io/deployment.name: postgresql-1
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      volumes:
+        - name: postgresql-volume-1
+          emptyDir: {}
+      containers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: postgresql
+          env:
+            - name: POSTGRESQL_DATABASE
+              value: aimlbot
+            - name: POSTGRESQL_PASSWORD
+              value: *****
+            - name: POSTGRESQL_USER
+              value: *****
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: postgresql-volume-1
+              mountPath: /var/lib/pgsql/data
+          terminationMessagePolicy: File
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:0cf19c73fb1ed0784a5092edd42ce662d7328dac529f56b6bfc3d85b24552ed4
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+status:
+  replicas: 1
+  fullyLabeledReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  observedGeneration: 2
+
